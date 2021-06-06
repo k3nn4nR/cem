@@ -22,6 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/persona','PersonaController@all');
 Route::post('/persona','PersonaController@store');
 Route::put('/persona','PersonaController@update');
-Route::get('/persona-contactos','ContactoController@allContactos');
+Route::get('/persona-contactos/{persona}','ContactoController@allContactos');
 
 Route::get('/contacto','ContactoController@all');
