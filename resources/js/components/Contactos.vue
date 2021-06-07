@@ -36,6 +36,11 @@
                         </v-dialog>
                     </v-toolbar>
                 </template>
+                <template v-slot:item.acciones="{ item }">
+                    <v-icon small class="mr-2" @click="editItem(item)" >
+                        mdi-pencil
+                    </v-icon>
+                </template> 
             </v-data-table>
         </v-card-text>
         <v-card-actions>
@@ -97,6 +102,11 @@ export default {
         this.getData()
     },
     methods:{
+        editItem (item) {
+            this.editedIndex = this.contactos.indexOf(item)
+            this.editedContacto = Object.assign({}, item)
+            this.dialog = true
+        },
         close(){
             this.$emit('delete');
         },

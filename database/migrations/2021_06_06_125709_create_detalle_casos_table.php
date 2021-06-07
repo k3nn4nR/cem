@@ -14,7 +14,7 @@ class CreateDetalleCasosTable extends Migration
     public function up()
     {
         Schema::create('detalle_casos', function (Blueprint $table) {
-            $table->string('agresor');
+            $table->bigIncrements('id');
             $table->string('caso_ficha');
             $table->string('agresor_dni',8);
             $table->string('comentario');

@@ -18,6 +18,7 @@ class CreateUbicacionesTable extends Migration
             $table->string('persona_dni',8);
             $table->string('direccion');
             $table->string('referencia')->nullable();
+            $table->string('tipo');
             $table->timestamps();
             $table->foreign('persona_dni')->references('dni')->on('personas')->onDelete('cascade')->onUpdate('cascade');
         });

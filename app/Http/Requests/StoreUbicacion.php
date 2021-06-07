@@ -26,6 +26,7 @@ class StoreUbicacion extends FormRequest
         return [
             'ubicacion.persona_dni'  => 'required|exists:personas,dni',
             'ubicacion.direccion'    => 'required',
+            'ubicacion.tipo'    => 'required',
         ];
     }
 
@@ -33,9 +34,9 @@ class StoreUbicacion extends FormRequest
     {
         return [
             
-            'ubicacion.persona_dni.required'    => 'Se requiere el Apellido Paterno.',
-            'ubicacion.persona_dni.exists'      => 'Se requiere el Apellido Paterno.',
-            'ubicacion.direccion.required'      => 'Se requiere el DNI.',
+            'ubicacion.persona_dni.required'    => 'Se requiere el dni de la persona.',
+            'ubicacion.persona_dni.exists'      => 'La persona no esta registrada en la BD.',
+            'ubicacion.tipo.required'           => 'Se requiere el tipo de ubivacion.',
         ];
     }
 }

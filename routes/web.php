@@ -28,6 +28,12 @@ Route::get('/persona-casos/{persona}','PersonaController@allCasos');
 
 Route::post('/contacto','ContactoController@store');
 Route::get('/contacto','ContactoController@all');
+Route::put('/contacto','ContactoController@update');
 
 Route::post('/ubicacion','UbicacionController@store');
 Route::get('/ubicacion','UbicacionController@all');
+Route::put('/ubicacion','UbicacionController@update');
+
+Route::get('/caso','CasoController@all');
+Route::post('/caso','CasoController@store');
+Route::put('/caso','CasoController@update');

@@ -40,6 +40,7 @@ class UbicacionController extends Controller
             'persona_dni'=> strtoupper($request->input('ubicacion')['persona_dni']),
             'direccion'=> strtoupper($request->input('ubicacion')['direccion']),
             'referencia'=> strtoupper($request->input('ubicacion')['referencia']),
+            'tipo'=> strtoupper($request->input('ubicacion')['tipo']),
         ]);
     }
 
@@ -72,9 +73,14 @@ class UbicacionController extends Controller
      * @param  \App\Ubicacion  $ubicacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ubicacion $ubicacion)
+    public function update(Request $request)
     {
-        //
+        Ubicacion::where('id', $request->input('ubicacion')['id'])
+            ->update([
+                'direccion' =>  strtoupper($request->input('ubicacion')['direccion']),
+                'referencia' =>  strtoupper($request->input('ubicacion')['referencia']),
+                'tipo' =>  strtoupper($request->input('ubicacion')['tipo']),
+            ]);
     }
 
     /**

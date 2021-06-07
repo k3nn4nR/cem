@@ -41,7 +41,6 @@
                                                 </v-icon>
                                                 Ubicaciones
                                             </v-tab>
-
                                             <v-tab-item>
                                                 <v-card flat>
                                                     <v-card-title><span class="text-h5">{{ formTitle }}</span></v-card-title>

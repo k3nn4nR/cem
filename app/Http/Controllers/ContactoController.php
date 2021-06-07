@@ -73,9 +73,14 @@ class ContactoController extends Controller
      * @param  \App\Contacto  $contacto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contacto $contacto)
+    public function update(Request $request)
     {
-        //
+        Contacto::where('id', $request->input('persona')['id']))
+            ->update([
+                'contacto_nombre' => strtoupper($request->input('persona')['contacto_nombre']),
+                'relacion' => strtoupper($request->input('persona')['relacion']),
+                'celular' => strtoupper($request->input('persona')['celular']),
+            ]);
     }
 
     /**

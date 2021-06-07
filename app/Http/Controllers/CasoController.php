@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Denuncia;
+use App\Caso;
 use Illuminate\Http\Request;
 
-class DenunciaController extends Controller
+class CasoController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        return Caso::all();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +46,7 @@ class DenunciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        d($request->all());
     }
 
     /**
@@ -44,7 +55,7 @@ class DenunciaController extends Controller
      * @param  \App\Denuncia  $denuncia
      * @return \Illuminate\Http\Response
      */
-    public function show(Denuncia $denuncia)
+    public function show(Caso $caso)
     {
         //
     }
@@ -55,7 +66,7 @@ class DenunciaController extends Controller
      * @param  \App\Denuncia  $denuncia
      * @return \Illuminate\Http\Response
      */
-    public function edit(Denuncia $denuncia)
+    public function edit(Caso $caso)
     {
         //
     }
@@ -67,9 +78,9 @@ class DenunciaController extends Controller
      * @param  \App\Denuncia  $denuncia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Denuncia $denuncia)
+    public function update(Request $request)
     {
-        //
+        d($request->all());
     }
 
     /**
@@ -78,7 +89,7 @@ class DenunciaController extends Controller
      * @param  \App\Denuncia  $denuncia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Denuncia $denuncia)
+    public function destroy(Caso $caso)
     {
         //
     }

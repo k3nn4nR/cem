@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-text>
-            {{ casos }}
+            
         </v-card-text>
     </v-card>
 </template>
@@ -17,8 +17,8 @@ export default {
     },
     methods:{
         getData(){
-
-}
+            axios.get('caso').then(response=>{this.casos=response.data})
+        }
     }
 }
 </script>

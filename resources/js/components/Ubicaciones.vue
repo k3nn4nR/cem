@@ -1,7 +1,7 @@
 <template>
     <v-card flat>
         <v-card-text>
-            <v-data-table :headers="DireccionesHeaders" :items="direcciones">
+            <v-data-table :headers="DireccionesHeaders" :items="ubicaciones">
                 <template v-slot:top>
                     <v-toolbar flat>
                         <v-toolbar-title>Ubicaciones</v-toolbar-title>
@@ -20,8 +20,13 @@
                                         <v-col>
                                             <v-text-field v-model="editedUbicacion.direccion" label="Direccion" />
                                         </v-col>
+                                    </v-row>
+                                    <v-row>
                                         <v-col>
                                             <v-text-field v-model="editedUbicacion.referencia" label="Referencia" />
+                                        </v-col>
+                                        <v-col>
+                                            <v-text-field v-model="editedUbicacion.tipo" label="Tipo" />
                                         </v-col>
                                     </v-row>
                                 </v-card-text>
@@ -33,6 +38,11 @@
                         </v-dialog>
                     </v-toolbar>
                 </template>
+                <template v-slot:item.acciones="{ item }">
+                    <v-icon small class="mr-2" @click="editItem(item)" >
+                        mdi-pencil
+                    </v-icon>
+                </template>    
             </v-data-table>
         </v-card-text>
         <v-card-actions>
@@ -46,18 +56,21 @@ export default {
     data(){
         return {
             dialog:false,
-            direcciones:[],
+            casos:[],
+            ubicaciones:[],
             editedUbicacion:{
                 id: '',
                 persona_dni: '',
                 direccion: '',
                 referencia: '',
+                tipo:'',
             },
             defaultUbicacion:{
                 id: '',
                 persona_dni: '',
                 direccion: '',
                 referencia: '',
+                tipo:'',
             },
             editedIndex: -1,
         };
@@ -70,9 +83,10 @@ export default {
             return [
                 {text:'Direccion',value:'direccion'},
                 {text:'Referencia',value:'referencia'},
+                {text:'Tipo',value:'tipo'},
                 {text: ' ',value: 'acciones'},
             ];
-        }
+        },
     },
     watch: {
         dialog (val) {
@@ -91,9 +105,13 @@ export default {
         this.getData()
     },
     methods:{
+        editItem (item) {
+            this.editedIndex = this.ubicaciones.indexOf(item)
+            this.editedUbicacion = Object.assign({}, item)
+            this.dialog = true
+        },
         getData(){
-            axios.get('persona-ubicaciones/'+this.persona).then(response=>{this.direcciones=response.data})
-            axios.get('persona-casos/'+this.persona).then(response=>{this.direcciones=response.data})
+            axios.get('persona-ubicaciones/'+this.persona).then(response=>{this.ubicaciones=response.data})
         },
         close(){
             this.$emit('delete');
