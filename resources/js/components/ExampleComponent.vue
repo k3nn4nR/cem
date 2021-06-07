@@ -5,7 +5,8 @@
                 <div class="card">
                     <div class="card-header">Example Component</div>
                     <div class="card-body">
-                        <Persona/>                        
+                        <Persona/>
+                        <Casos/>                        
                     </div>
                     <div class="card-footer">
                     </div>
@@ -17,9 +18,11 @@
 
 <script>
     import Persona from  './Personas.vue';
+    import Casos from  './Casos.vue';
     export default {
         components:{
-            Persona
+            Persona,
+            Casos,
         },
         data(){
             return {

@@ -14,10 +14,12 @@ class CreateDetalleCasosTable extends Migration
     public function up()
     {
         Schema::create('detalle_casos', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->string('agresor');
+            $table->string('caso_ficha');
             $table->string('agresor_dni',8);
             $table->string('comentario');
             $table->timestamps();
+            $table->foreign('caso_ficha')->references('ficha')->on('casos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('agresor_dni')->references('dni')->on('personas')->onDelete('cascade')->onUpdate('cascade');
         });
     }

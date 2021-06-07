@@ -62,7 +62,7 @@
                                                                 <v-text-field v-model="editedPersona.ape_materno" label="Apellido Materno" />
                                                             </v-col>
                                                         </v-row>
-                                                            <v-row>
+                                                        <v-row>
                                                             <v-col>
                                                                 <v-text-field v-model="editedPersona.celular" label="Celular" />
                                                             </v-col>
@@ -144,7 +144,6 @@
                     edad: 0,
                     nivel_riesgo: '',
                 },
-                dni:'',
             };
         },
         computed:{
@@ -178,7 +177,7 @@
                 val || this.closeDelete()
             },
         },
-         created () {
+        created () {
             this.getData()
         },
         methods:{

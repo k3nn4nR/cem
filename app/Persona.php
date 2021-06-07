@@ -10,15 +10,18 @@ class Persona extends Model
     protected $keyType = 'string';
     protected $fillable = ['dni','ape_paterno','ape_materno','nombres','edad','celular','nivel_riesgo'];
 
-    //denuncias
+    public function casos()
+    {
+        return $this->hasMany('App\Caso','denunciante_dni','dni');
+    }
 
     public function ubicaciones()
     {
-        return $this->hasMany('App\Ubicacion');
+        return $this->hasMany('App\Ubicacion','persona_dni','dni');
     }
 
     public function contactos()
     {
-        return $this->hasMany('App\Contacto');
+        return $this->hasMany('App\Contacto','persona_dni','dni');
     }
 }

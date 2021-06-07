@@ -14,8 +14,7 @@ class CreateCasosTable extends Migration
     public function up()
     {
         Schema::create('casos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('ficha')->unique();
+            $table->string('ficha');
             $table->string('denunciante_dni',8);
             $table->date('fecha_caso');
             $table->string('tipo');
@@ -24,6 +23,7 @@ class CreateCasosTable extends Migration
             $table->string('medida')->nullable();
             $table->string('observacion_abogado')->nullable();
             $table->timestamps();
+            $table->primary('ficha');
             $table->foreign('denunciante_dni')->references('dni')->on('personas')->onDelete('cascade')->onUpdate('cascade');
         });
     }

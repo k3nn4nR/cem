@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contacto;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreContacto;
 
 class ContactoController extends Controller
 {
@@ -33,9 +34,14 @@ class ContactoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreContacto $request)
     {
-        //
+        $contacto = Contacto::create([
+            'persona_dni'=> strtoupper($request->input('contacto')['persona_dni']),
+            'contacto_nombre'=> strtoupper($request->input('contacto')['contacto_nombre']),
+            'relacion'=> strtoupper($request->input('contacto')['relacion']),
+            'celular'=> $request->input('contacto')['celular'],
+        ]);
     }
 
     /**
@@ -44,7 +50,7 @@ class ContactoController extends Controller
      * @param  \App\Contacto  $contacto
      * @return \Illuminate\Http\Response
      */
-    public function show(Contacto $contacto)
+    public function show(StoreContacto $contacto)
     {
         //
     }

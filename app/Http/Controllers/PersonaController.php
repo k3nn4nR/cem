@@ -115,6 +115,16 @@ class PersonaController extends Controller
 
     public function allContactos(Persona $persona)
     {
-        dd($reqeust->all());
+        return Persona::find($persona->dni)->contactos;
+    }
+
+    public function allUbicaciones(Persona $persona)
+    {
+        return Persona::find($persona->dni)->ubicaciones;
+    }
+
+    public function allCasos(Persona $persona)
+    {
+        return Persona::find($persona->dni)->casos;
     }
 }

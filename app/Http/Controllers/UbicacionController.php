@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ubicacion;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUbicacion;
 
 class UbicacionController extends Controller
 {
@@ -33,9 +34,13 @@ class UbicacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUbicacion $request)
     {
-        //
+        $ubicacion = Ubicacion::create([
+            'persona_dni'=> strtoupper($request->input('ubicacion')['persona_dni']),
+            'direccion'=> strtoupper($request->input('ubicacion')['direccion']),
+            'referencia'=> strtoupper($request->input('ubicacion')['referencia']),
+        ]);
     }
 
     /**
