@@ -15,7 +15,10 @@ class CreateSeguimientosTable extends Migration
     {
         Schema::create('seguimientos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('detalle_caso_id');
+            $table->date('fecha');
             $table->timestamps();
+            $table->foreign('detalle_caso_id')->references('id')->on('detalle_casos')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

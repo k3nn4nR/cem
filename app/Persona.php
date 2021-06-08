@@ -24,4 +24,9 @@ class Persona extends Model
     {
         return $this->hasMany('App\Contacto','persona_dni','dni');
     }
+
+    // public function ()
+    // {
+
+    // }
 }
