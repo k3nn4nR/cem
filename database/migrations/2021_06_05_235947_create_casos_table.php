@@ -18,7 +18,6 @@ class CreateCasosTable extends Migration
             $table->string('denunciante_dni',8);
             $table->date('fecha_caso');
             $table->string('tipo');
-            $table->string('vinculo');
             $table->string('lugar');
             $table->string('medida')->nullable();
             $table->string('observacion_abogado')->nullable();

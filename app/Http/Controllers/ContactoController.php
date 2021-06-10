@@ -75,7 +75,7 @@ class ContactoController extends Controller
      */
     public function update(Request $request)
     {
-        Contacto::where('id', $request->input('persona')['id']))
+        Contacto::where('id', $request->input('persona')['id'])
             ->update([
                 'contacto_nombre' => strtoupper($request->input('persona')['contacto_nombre']),
                 'relacion' => strtoupper($request->input('persona')['relacion']),

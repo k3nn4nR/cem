@@ -17,6 +17,7 @@ class CreateDetalleCasosTable extends Migration
             $table->bigIncrements('id');
             $table->string('caso_ficha');
             $table->string('agresor_dni',8);
+            $table->string('vinculo');
             $table->string('comentario');
             $table->timestamps();
             $table->foreign('caso_ficha')->references('ficha')->on('casos')->onDelete('cascade')->onUpdate('cascade');

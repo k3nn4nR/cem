@@ -8,7 +8,7 @@ class DetalleCaso extends Model
 {
     protected $primaryKey = 'ficha';
     protected $keyType = 'string';
-    protected $fillable = ['caso_ficha','agresor_dni','comentario'];
+    protected $fillable = ['caso_ficha','agresor_dni','vinculo','comentario'];
 
     public function denuncuante()
     {
