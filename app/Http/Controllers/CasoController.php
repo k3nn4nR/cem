@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Caso;
+use App\DetalleCaso;
+use App\Http\Requests\StoreCaso;
 use Illuminate\Http\Request;
 
 class CasoController extends Controller
@@ -44,9 +46,26 @@ class CasoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCaso $request)
     {
-        d($request->all());
+        $caso = Caso::create([
+            'denunciante_dni' => strtoupper($request->input('denunciante_dni')),
+            'fecha_caso' => strtoupper($request->input('fecha_caso')),
+            'ficha' => strtoupper($request->input('ficha')),
+            'lugar' => strtoupper($request->input('lugar')),
+            'medida' => strtoupper($request->input('medida')),
+            'observacion_abogado' => strtoupper($request->input('observacion_abogado')),
+            'tipo' => strtoupper($request->input('tipo')),
+        ]);
+        foreach($request->input('detalles') as $detalle)
+        {
+            $detalle = DetalleCaso::create([
+                'caso_ficha' => strtoupper($request->input('ficha')),
+                'agresor_dni' => strtoupper($detalle["agresor_dni"]),
+                'vinculo' => strtoupper($detalle["vinculo"]),
+                'comentario' => strtoupper($detalle["comentario"]),
+            ]);
+        }
     }
 
     /**
