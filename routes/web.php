@@ -37,3 +37,5 @@ Route::put('/ubicacion','UbicacionController@update');
 Route::get('/caso','CasoController@all');
 Route::post('/caso','CasoController@store');
 Route::put('/caso','CasoController@update');
+
+Route::get('/caso/{ficha}','CasoController@show');

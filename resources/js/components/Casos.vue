@@ -102,7 +102,76 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
+                                    <v-dialog v-model="dialogShow" max-width="700px" persistent>
+                                        <v-card>
+                                            <v-card-title>Caso {{ editedCaso.ficha }} </v-card-title>
+                                            <v-card-text v-if="editedCaso.denuncuante">
+                                                <v-row>
+                                                    <v-col>
+                                                        <v-text-field v-model="editedCaso.denuncuante.ape_paterno" label="Apellido Paterno" />
+                                                    </v-col>
+                                                    <v-col>
+                                                        <v-text-field v-model="editedCaso.denuncuante.ape_materno" label="Apellido Materno" />
+                                                    </v-col>
+                                                    <v-col>
+                                                        <v-text-field v-model="editedCaso.denuncuante.nombres" label="Nombre" />
+                                                    </v-col>
+                                                </v-row>
+                                                <v-row>
+                                                    <v-col>
+                                                        <v-text-field v-model="editedCaso.denuncuante.celular" label="Celular" />
+                                                    </v-col>
+                                                    <v-col>
+                                                        <v-text-field v-model="editedCaso.denuncuante.edad" label="Edad" />
+                                                    </v-col>
+                                                    <v-col>
+                                                        <v-text-field v-model="editedCaso.denuncuante.nivel_riesgo" label="Nivel de Riesgo" />
+                                                    </v-col>
+                                                </v-row>
+                                                <v-row>
+                                                    
+                                                </v-row>
+                                                <v-card outlined v-for="(caso_detalle,cd) in caso_detalles" :key="cd">
+                                                    <v-card-title></v-card-title>
+                                                    <v-card-text>
+                                                        <v-row>
+                                                            <v-col>
+                                                                <v-text-field label="Apellido Paterno" dense v-model="caso_detalle.agresor.ape_paterno "/>
+                                                            </v-col>
+                                                            <v-col>
+                                                                <v-text-field label="Apellido Materno" dense v-model="caso_detalle.agresor.ape_materno "/>
+                                                            </v-col>
+                                                            <v-col>
+                                                                <v-text-field label="Nombre" dense v-model="caso_detalle.agresor.nombres "/>
+                                                            </v-col>
+                                                        </v-row>
+                                                        <v-row>
+                                                            <v-col>
+                                                                <v-text-field label="DNI" dense v-model="caso_detalle.agresor_dni "/>
+                                                            </v-col>
+                                                            <v-col>
+                                                                <v-text-field label="Vinculo" dense v-model="caso_detalle.vinculo "/>
+                                                            </v-col>
+                                                        </v-row>
+                                                        <v-row>
+                                                            <v-col>
+                                                                <v-text-field label="Comentario" dense v-model="caso_detalle.comentario "/>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </v-card-text>
+                                                </v-card>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <v-btn @click="closeShow" class="error">Cerrar</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
                                 </v-toolbar>
+                            </template>
+                            <template v-slot:item.acciones="{ item }">
+                                <v-icon small class="mr-2" @click="show(item)">
+                                    mdi-eye
+                                </v-icon>
                             </template>
                         </v-data-table>
                     </v-card-text>
@@ -118,6 +187,7 @@ export default {
             date: new Date().toISOString().substr(0, 10),
             menu: false,
             dialog:false,
+            dialogShow:false,
             busqueda:'',
             casos:[],
             personas:[],
@@ -144,7 +214,8 @@ export default {
                 agresor_dni:'',
                 vinculo:'',
                 comentario:'',
-            }]
+            }],
+            caso_detalles:'',
         };
     },
     computed:{
@@ -152,7 +223,10 @@ export default {
             return [
                 {text:'Ficha',value:'ficha'},
                 {text:'Registrado',value:'fecha_caso'},
-                {text:'Denunciante',value:'denunciante_dni'},
+                {text:'Nombres',value:'denuncuante.nombres'},
+                {text:'Apellido Paterno',value:'denuncuante.ape_paterno'},
+                {text:'Apellido Materno',value:'denuncuante.ape_materno'},
+                {text:'Acciones',value:'acciones'},
             ];
         },
         formTitle () {
@@ -250,6 +324,18 @@ export default {
         removeDetalle(index)
         {
             this.detalles.splice(index,1);
+        },
+        show(item){
+            this.editedCaso = Object.assign({}, item)
+            axios.get('caso/'+item.ficha).then(response=>{
+                this.caso_detalles = response.data
+                this.dialogShow = true                
+            })
+        },
+        closeShow(){
+            this.dialogShow = false
+            this.caso_detalles = ''
+            this.editedCaso = this.defaultCaso
         },
     }
 }

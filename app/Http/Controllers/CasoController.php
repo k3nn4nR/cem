@@ -17,7 +17,7 @@ class CasoController extends Controller
      */
     public function all()
     {
-        return Caso::all();
+        return Caso::with('denuncuante')->get();
     }
 
     /**
@@ -74,9 +74,9 @@ class CasoController extends Controller
      * @param  \App\Denuncia  $denuncia
      * @return \Illuminate\Http\Response
      */
-    public function show(Caso $caso)
+    public function show($caso)
     {
-        //
+        return DetalleCaso::where('caso_ficha',$caso)->with('agresor')->get();
     }
 
     /**

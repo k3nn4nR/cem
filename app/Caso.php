@@ -12,7 +12,7 @@ class Caso extends Model
 
     public function denuncuante()
     {
-        return $this->belongsTo('App\Persona','persona_dni','dni');
+        return $this->belongsTo('App\Persona','denunciante_dni','dni');
     }
 
     public function detalles()
