@@ -4,7 +4,7 @@
             <v-card>
                 <v-card-text>
                     <v-card-text>
-                        <v-data-table :headers="CasosHeaders" :items="casos" :search="busqueda">
+                        <v-data-table dense :headers="CasosHeaders" :items="casos" :search="busqueda">
                             <template v-slot:top>
                                 <v-toolbar flat>
                                     <v-toolbar-title>Casos</v-toolbar-title>
@@ -55,10 +55,10 @@
                                                     <v-col>
                                                         <v-select dense :items="personas" label="Denunciante" item-value="dni" v-model="editedCaso.denunciante_dni">
                                                             <template slot="selection" slot-scope="data">
-                                                                {{ data.item.ape_paterno+" "+data.item.ape_materno+" "+data.item.nombres }}
+                                                                {{ data.item.dni+" "+data.item.ape_paterno+" "+data.item.ape_materno+" "+data.item.nombres }}
                                                             </template>
                                                             <template slot="item" slot-scope="data">
-                                                                {{ data.item.ape_paterno+" "+data.item.ape_materno+" "+data.item.nombres }}
+                                                                {{ data.item.dni+" "+data.item.ape_paterno+" "+data.item.ape_materno+" "+data.item.nombres }}
                                                             </template>
                                                         </v-select>
                                                     </v-col>
@@ -74,10 +74,10 @@
                                                             <v-col>
                                                                 <v-select dense :items="agresores" label="Agresor" item-value="dni" v-model="detalle.agresor_dni">
                                                                     <template slot="selection" slot-scope="data">
-                                                                        {{ data.item.ape_paterno+" "+data.item.ape_materno+" "+data.item.nombres }}
+                                                                        {{ data.item.dni+" "+data.item.ape_paterno+" "+data.item.ape_materno+" "+data.item.nombres }}
                                                                     </template>
                                                                     <template slot="item" slot-scope="data">
-                                                                        {{ data.item.ape_paterno+" "+data.item.ape_materno+" "+data.item.nombres }}
+                                                                        {{ data.item.dni+" "+data.item.ape_paterno+" "+data.item.ape_materno+" "+data.item.nombres }}
                                                                     </template>
                                                                 </v-select>
                                                             </v-col>

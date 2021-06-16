@@ -5,8 +5,19 @@
                 <div class="card">
                     <div class="card-header">Example Component</div>
                     <div class="card-body">
-                        <Persona/>
-                        <Casos/>                        
+                        <v-row>
+                            <v-col>
+                                <Persona/>
+                            </v-col>
+                            <v-col>
+                                <Casos/>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col>
+                                <Personal/>
+                            </v-col>
+                        </v-row>
                     </div>
                     <div class="card-footer">
                     </div>
@@ -18,11 +29,13 @@
 
 <script>
     import Persona from  './Personas.vue';
+    import Personal from  './Personal.vue';
     import Casos from  './Casos.vue';
     export default {
         components:{
             Persona,
             Casos,
+            Personal,
         },
         data(){
             return {

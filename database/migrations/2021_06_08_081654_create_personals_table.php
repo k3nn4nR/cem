@@ -14,10 +14,11 @@ class CreatePersonalsTable extends Migration
     public function up()
     {
         Schema::create('personal', function (Blueprint $table) {
-            $table->string('id');
+            $table->string('id')->primary();
             $table->string('persona_dni');
             $table->string('cargo');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('persona_dni')->references('dni')->on('personas')->onDelete('cascade')->onUpdate('cascade');
         });
     }

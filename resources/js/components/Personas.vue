@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-text>
-            <v-data-table :headers="PersonasHeaders" :items="personas" :search="busqueda">
+            <v-data-table :headers="PersonasHeaders" :items="personas" :search="busqueda" dense>
                 <template v-slot:top>
                     <v-toolbar flat>
                         <v-toolbar-title>Personas</v-toolbar-title>
@@ -191,16 +191,29 @@
             },
             save () {
                 if (this.editedIndex > -1) {
-                    axios.put('persona',{dni_original:this.dni,persona:this.editedPersona}).then(response=>{this.getData()}).catch(error =>{
+                    axios.put('persona',{dni_original:this.dni,persona:this.editedPersona}).then(response=>{
+                        this.getData()
+                        this.close()
+                        Swal.fire({
+                            icon:'success',
+                            text:'Actualizacion Satisfactoria!',
+                        })
+                    }).catch(error =>{
                         this.showError(error.response.data.errors)
                     })
                 } 
                 if(this.editedIndex == -1) {
-                    axios.post('persona',{persona:this.editedPersona}).then(response=>{this.getData()}).catch(error =>{
+                    axios.post('persona',{persona:this.editedPersona}).then(response=>{
+                        this.getData()
+                        this.close()
+                        Swal.fire({
+                            icon:'success',
+                            text:'Registro Satisfactorio!',
+                        })
+                    }).catch(error =>{
                         this.showError(error.response.data.errors)
                     })
                 }
-                this.close()
             },
             close () {
                 this.dialog = false
@@ -221,7 +234,7 @@
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
-                    onOpen: (toast) => {
+                    didOpen: (toast) => {
                         toast.addEventListener('mouseenter', Swal.stopTimer)
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }

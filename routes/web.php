@@ -38,4 +38,10 @@ Route::get('/caso','CasoController@all');
 Route::post('/caso','CasoController@store');
 Route::put('/caso','CasoController@update');
 
+
+Route::get('/personal','PersonalController@all');
+Route::post('/personal','PersonalController@store');
+Route::put('/personal','PersonalController@update');
+Route::delete('/personal','PersonalController@destroy');
+
 Route::get('/caso/{ficha}','CasoController@show');

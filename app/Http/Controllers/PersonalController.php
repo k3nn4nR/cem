@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Personal;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePersonal;
 
 class PersonalController extends Controller
 {
+    public function all()
+    {
+        return Personal::with('persona')->get();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +38,13 @@ class PersonalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePersonal $request)
     {
-        //
+        $personal = Personal::create([
+            'id'=> strtoupper($request->input('personal')['id']),
+            'persona_dni'=> strtoupper($request->input('personal')['persona_dni']),
+            'cargo'=> strtoupper($request->input('personal')['cargo']),
+        ]);
     }
 
     /**
