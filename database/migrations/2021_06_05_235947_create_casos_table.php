@@ -21,6 +21,7 @@ class CreateCasosTable extends Migration
             $table->string('lugar');
             $table->string('medida')->nullable();
             $table->string('observacion_abogado')->nullable();
+            $table->string('estado')->default('ACTIVO');
             $table->timestamps();
             $table->primary('ficha');
             $table->foreign('denunciante_dni')->references('dni')->on('personas')->onDelete('cascade')->onUpdate('cascade');

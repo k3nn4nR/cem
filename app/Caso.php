@@ -8,7 +8,7 @@ class Caso extends Model
 {
     protected $primaryKey = 'ficha';
     protected $keyType = 'string';
-    protected $fillable = ['ficha','denunciante_dni','fecha_caso','tipo','lugar','medida','observacion_abogado'];
+    protected $fillable = ['ficha','denunciante_dni','fecha_caso','tipo','lugar','medida','estado','observacion_abogado'];
 
     public function denuncuante()
     {

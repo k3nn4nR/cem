@@ -1,7 +1,7 @@
 <template>
     <v-layout wrap>
         <v-flex xs12>
-            <v-card>
+            <v-card outlined>
                 <v-card-text>
                     <v-card-text>
                         <v-data-table dense :headers="CasosHeaders" :items="casos" :search="busqueda">

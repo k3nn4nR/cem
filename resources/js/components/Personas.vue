@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card outlined>
         <v-card-text>
             <v-data-table :headers="PersonasHeaders" :items="personas" :search="busqueda" dense>
                 <template v-slot:top>
