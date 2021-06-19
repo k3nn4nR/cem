@@ -7,6 +7,21 @@
                     <div class="card-body">
                         <v-row>
                             <v-col>
+                                <Personas/>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col>
+                                <Personal/>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col>
+                                <Casos/>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col>
                                 <Seguimientos/>
                             </v-col>
                         </v-row>
@@ -21,9 +36,15 @@
 
 <script>
     import Seguimientos from './Seguimientos.vue';
+    import Casos from './Casos.vue';
+    import Personas from './Personas.vue';
+    import Personal from './Personal.vue';
     export default {
         components:{
             Seguimientos,
+            Casos,
+            Personas,
+            Personal,
         },
         mounted() {
 

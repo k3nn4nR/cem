@@ -26,6 +26,11 @@ Route::get('/persona-contactos/{persona}','PersonaController@allContactos');
 Route::get('/persona-ubicaciones/{persona}','PersonaController@allUbicaciones');
 Route::get('/persona-casos/{persona}','PersonaController@allCasos');
 
+Route::get('/detalle','DetalleCasoController@index');
+
+Route::get('/seguimiento','SeguimientoController@index');
+Route::post('/seguimiento','SeguimientoController@store');
+
 Route::post('/contacto','ContactoController@store');
 Route::get('/contacto','ContactoController@all');
 Route::put('/contacto','ContactoController@update');
@@ -37,11 +42,10 @@ Route::put('/ubicacion','UbicacionController@update');
 Route::get('/caso','CasoController@all');
 Route::post('/caso','CasoController@store');
 Route::put('/caso','CasoController@update');
+Route::get('/caso/{ficha}','CasoController@show');
 
 
 Route::get('/personal','PersonalController@all');
 Route::post('/personal','PersonalController@store');
 Route::put('/personal','PersonalController@update');
 Route::delete('/personal','PersonalController@destroy');
-
-Route::get('/caso/{ficha}','CasoController@show');

@@ -1,112 +1,275 @@
 <template>
-    <v-card outlined>
+    <v-card>
         <v-card-text>
-            <!-- <v-data-table :headers="SeguimientoHeaders" :items="seguimientos" :search="busqueda" dense>
-                <template v-slot:top>
-                    <v-toolbar flat>
-                        <v-toolbar-title>Seguimientos</v-toolbar-title>
-                        <v-divider class="mx-4" inset vertical/>
-                        <v-spacer/>
-                        <v-text-field v-model="busqueda" label="Busqueda" />
-                        <v-divider class="mx-4" inset vertical/>
-                        <v-spacer/>
-                        <v-dialog v-model="dialog" max-width="700px" persistent>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn color="success" dark class="mb-2" v-bind="attrs" v-on="on" >
-                                    +
-                                </v-btn>
-                            </template>
-                            <v-card>
-                                <v-card-title></v-card-title>
+            <v-row class="fill-height">
+                <v-col>
+                    <v-sheet height="64">
+                        <v-toolbar flat >
+                            <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday" >
+                                Today
+                            </v-btn>
+                            <v-btn fab text small color="grey darken-2" @click="prev" >
+                                <v-icon small>
+                                    mdi-chevron-left
+                                </v-icon>
+                            </v-btn>
+                            <v-btn fab text small color="grey darken-2" @click="next" >
+                                <v-icon small>
+                                    mdi-chevron-right
+                                </v-icon>
+                            </v-btn>
+                            <v-toolbar-title v-if="$refs.calendar">
+                                {{ $refs.calendar.title }}
+                            </v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <v-dialog v-model="dialog" max-width="700px" persistent>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn color="success" dark class="mb-2" v-bind="attrs" v-on="on" >
+                                        +
+                                    </v-btn>
+                                </template>
+                                <v-card>
+                                    <v-card-title><span class="text-h5">Registrar Seguimiento</span></v-card-title>
+                                    <v-card-text>
+                                        <v-row>
+                                            <v-col>
+                                                <v-select dense :items="casos" label="Casos" v-model="casoSelected">
+                                                    <template slot="selection" slot-scope="data">
+                                                        {{ data.item.ficha }}
+                                                    </template>
+                                                    <template slot="item" slot-scope="data">
+                                                        {{ data.item.ficha }}
+                                                    </template>
+                                                </v-select>
+                                            </v-col>
+                                            <v-col>
+                                                <v-menu v-model="menu" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto" >
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-text-field dense v-model="fecha" label="Fecha del caso" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"/>
+                                                    </template>
+                                                    <v-date-picker v-model="fecha" @input="menu = false"/>
+                                                </v-menu>
+                                            </v-col>
+                                            <v-col v-if="casoSelected">
+                                                <v-text-field dense v-model="casoSelected.estado" label="Estado" />
+                                            </v-col>
+                                        </v-row>
+                                        <v-row v-if="casoSelected">
+                                            <v-col>
+                                                <v-text-field dense v-model="casoSelected.lugar" label="Lugar" />
+                                            </v-col>
+                                            <v-col>
+                                                <v-text-field dense v-model="casoSelected.tipo" label="Tipo" />
+                                            </v-col>
+                                        </v-row>
+                                        <v-row v-if="casoSelected">
+                                            <v-col>
+                                                <v-text-field dense v-model="casoSelected.medida" label="Medida" />
+                                            </v-col>
+                                            <v-col>
+                                                <v-text-field dense v-model="casoSelected.observacion_abogado" label="Obsevacion Abogado" />
+                                            </v-col>
+                                        </v-row>
+                                        <v-row v-if="casoSelected.denunciante" >
+                                            <v-card outlined>
+                                                <v-card-title>Denunciante</v-card-title>
+                                                <v-card-text>
+                                                    <v-row>
+                                                        <v-col>
+                                                            <v-text-field dense v-model="casoSelected.denunciante.ape_paterno" label="Apellido Paterno" />
+                                                        </v-col>
+                                                        <v-col>
+                                                            <v-text-field dense v-model="casoSelected.denunciante.ape_materno" label="Apellido Materno" />
+                                                        </v-col>
+                                                        <v-col>
+                                                            <v-text-field dense v-model="casoSelected.denunciante.nombres" label="Nombres" />
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-card-text>
+                                            </v-card>
+                                        </v-row>
+                                        <v-row v-if="casoSelected.detalles">
+                                            <v-card outlined>
+                                                <v-card-title>Agresores</v-card-title>
+                                                <v-card-text v-for="(detalle,d) in casoSelected.detalles" :key="d">
+                                                    <v-row>
+                                                        <v-col>
+                                                            <v-text-field dense v-model="detalle.agresor.ape_paterno" label="Apellido Paterno" />
+                                                        </v-col>
+                                                        <v-col>
+                                                            <v-text-field dense v-model="detalle.agresor.ape_materno" label="Apellido Materno" />
+                                                        </v-col>
+                                                        <v-col>
+                                                            <v-text-field dense v-model="detalle.agresor.nombres" label="Nombres" />
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row>
+                                                        <v-col> 
+                                                            <v-text-field dense v-model="detalle.vinculo" label="Vinculo" />
+                                                        </v-col>
+                                                        <v-col> 
+                                                            <v-text-field dense v-model="detalle.comentario" label="Comentario" />
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-card-text>
+                                            </v-card>
+                                        </v-row>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-btn class="success" @click="save">Guardar</v-btn>
+                                        <v-btn class="error" @click="close">Cancelar</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        </v-toolbar>
+                    </v-sheet>
+                    <v-sheet height="600">
+                        <v-calendar ref="calendar" v-model="focus" color="primary" :events="events" :event-color="getEventColor" :type="type" @click:event="showEvent" @click:more="viewDay" @click:date="viewDay"/>
+                        <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x >
+                            <v-card color="grey lighten-4" min-width="350px" flat >
+                                <v-toolbar :color="selectedEvent.color" dark >
+                                    <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+                                    <v-spacer></v-spacer>
+                                </v-toolbar>
                                 <v-card-text>
-
+                                    <span v-html="selectedEvent.details"></span>
                                 </v-card-text>
                                 <v-card-actions>
-                                    <v-btn class="error" @click="dialog=false" >Cancelar</v-btn>
+                                    <v-btn class="error" @click="selectedOpen = false" >
+                                        Cancel
+                                    </v-btn>
                                 </v-card-actions>
                             </v-card>
-                        </v-dialog>
-                    </v-toolbar>
-                </template>
-            </v-data-table> -->
-
-            <div>
-                <v-sheet tile height="54" class="d-flex" >
-                    <v-btn icon class="ma-2" @click="$refs.calendar.prev()" >
-                        <v-icon>mdi-chevron-left</v-icon>
-                    </v-btn>
-                    <v-select v-model="type" :items="types" dense outlined hide-details class="ma-2" label="type" ></v-select>
-                    <v-select v-model="mode" :items="modes" dense outlined hide-details label="event-overlap-mode" class="ma-2" ></v-select>
-                    <v-select v-model="weekday" :items="weekdays" dense outlined hide-details label="weekdays" class="ma-2" ></v-select>
-                    <v-spacer></v-spacer>
-                    <v-btn icon class="ma-2" @click="$refs.calendar.next()" >
-                        <v-icon>mdi-chevron-right</v-icon>
-                    </v-btn>
-                </v-sheet>
-                <v-sheet height="600">
-                    <v-calendar ref="calendar" v-model="value" :weekdays="weekday" :type="type" :events="events" :event-overlap-mode="mode" :event-overlap-threshold="30" :event-color="getEventColor" @change="getEvents" ></v-calendar>
-                </v-sheet>
-            </div>
+                        </v-menu>
+                    </v-sheet>
+                </v-col>
+            </v-row>
         </v-card-text>
-    </v-card>
+    </v-card>  
 </template>
 <script>
     export default {
         data: () => ({
+            menu: false,
             dialog:false,
-            busqueda:'',
             seguimientos:[],
+            fecha:'',
+            casos:[],
+            casoSelected:'',
+            focus: '',
             type: 'month',
-            types: ['month', 'week', 'day', '4day'],
-            mode: 'stack',
-            modes: ['stack', 'column'],
-            weekday: [0, 1, 2, 3, 4, 5, 6],
-            weekdays: [
-                { text: 'Sun - Sat', value: [0, 1, 2, 3, 4, 5, 6] },
-                { text: 'Mon - Sun', value: [1, 2, 3, 4, 5, 6, 0] },
-                { text: 'Mon - Fri', value: [1, 2, 3, 4, 5] },
-                { text: 'Mon, Wed, Fri', value: [1, 3, 5] },
-            ],
-            value: '',
+            typeToLabel: {
+                month: 'Month',
+                week: 'Week',
+                day: 'Day',
+                '4day': '4 Days',
+            },
+            selectedEvent: {},
+            selectedElement: null,
+            selectedOpen: false,
             events: [],
             colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
             names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
         }),
-        methods: {
-            getData(){
-
-                },
-            getEvents ({ start, end }) {
-                const events = []
-
-                const min = new Date(`${start.date}T00:00:00`)
-                const max = new Date(`${end.date}T23:59:59`)
-                const days = (max.getTime() - min.getTime()) / 86400000
-                const eventCount = this.rnd(days, days + 20)
-
-                for (let i = 0; i < eventCount; i++) {
-                const allDay = this.rnd(0, 3) === 0
-                const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-                const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-                const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-                const second = new Date(first.getTime() + secondTimestamp)
-
-                events.push({
-                    name: this.names[this.rnd(0, this.names.length - 1)],
-                    start: first,
-                    end: second,
-                    color: this.colors[this.rnd(0, this.colors.length - 1)],
-                    timed: !allDay,
-                })
+        mounted () {
+            this.$refs.calendar.checkChange()
+            this.getData()
+        },
+        watch:{
+            seguimientos( val ){
+                if(val > 0){
+                    this.updateRange()
                 }
-
-                this.events = events
+            }
+        },
+        methods: {
+            viewDay ({ date }) {
+                this.focus = date
+                this.type = 'day'
             },
             getEventColor (event) {
                 return event.color
             },
+            setToday () {
+                this.focus = ''
+            },
+            prev () {
+                this.$refs.calendar.prev()
+            },
+            next () {
+                this.$refs.calendar.next()
+            },
+            showEvent ({ nativeEvent, event }) {
+                const open = () => {
+                    this.selectedEvent = event
+                    this.selectedElement = nativeEvent.target
+                    requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
+                }
+                if (this.selectedOpen) {
+                    this.selectedOpen = false
+                    requestAnimationFrame(() => requestAnimationFrame(() => open()))
+                } else {
+                    open()
+                }
+                nativeEvent.stopPropagation()
+            },
             rnd (a, b) {
                 return Math.floor((b - a + 1) * Math.random()) + a
+            },
+            getData(){
+                axios.get('seguimiento').then(response=>{
+                    const events = []
+                    response.data.forEach(seguimiento => {
+                        events.push({
+                            name: ""+"Caso: "+seguimiento.id+" Agresor: "+seguimiento.detalles.agresor.dni,
+                            start: ""+seguimiento.fecha,
+                            color: 'green',
+                            details: seguimiento.detalles,
+                        })
+                    });
+                    this.events = events
+                })
+                axios.get('caso').then(response=>{this.casos = response.data})
+            },
+            close () {
+                this.dialog = false
+                this.casoSelected = ''
+                this.fecha = ''
+            },
+            save(){
+                let formData = new FormData
+                let index = 0
+                formData.append('fecha',this.fecha)
+                if(this.casoSelected != ''){
+                    this.casoSelected.detalles.forEach(detalle => {
+                        formData.append('detalles['+index+']',detalle.id)
+                        index++
+                    });
+                }
+                axios.post('seguimiento',formData).then(response=>{
+                    this.close()
+                    this.getData()
+                }).catch(error =>{
+                    var texto="";
+                    for (var property in error.response.data.errors){
+                        texto = texto + error.response.data.errors[property]+'\n';
+                    }
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    });
+                    Toast.fire({
+                        icon: 'warning',
+                        title : texto
+                    })
+                })
             },
         },
     }

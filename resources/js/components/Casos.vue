@@ -223,9 +223,9 @@ export default {
             return [
                 {text:'Ficha',value:'ficha'},
                 {text:'Registrado',value:'fecha_caso'},
-                {text:'Nombres',value:'denuncuante.nombres'},
-                {text:'Apellido Paterno',value:'denuncuante.ape_paterno'},
-                {text:'Apellido Materno',value:'denuncuante.ape_materno'},
+                {text:'Nombres',value:'denunciante.nombres'},
+                {text:'Apellido Paterno',value:'denunciante.ape_paterno'},
+                {text:'Apellido Materno',value:'denunciante.ape_materno'},
                 {text:'Acciones',value:'acciones'},
             ];
         },

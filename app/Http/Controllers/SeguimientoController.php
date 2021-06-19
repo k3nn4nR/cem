@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Seguimiento;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreSeguimiento;
 
 class SeguimientoController extends Controller
 {
@@ -14,7 +15,7 @@ class SeguimientoController extends Controller
      */
     public function index()
     {
-        //
+        return Seguimiento::with('detalles.agresor','personal')->get();
     }
 
     /**
@@ -33,9 +34,14 @@ class SeguimientoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSeguimiento $request)
     {
-        //
+        foreach($request->input('detalles') as $detalle){
+            Seguimiento::create([
+                'detalle_caso_id' => $detalle,
+                'fecha' => $request->input('fecha'),
+            ]);
+        }
     }
 
     /**

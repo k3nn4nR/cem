@@ -10,7 +10,7 @@ class Caso extends Model
     protected $keyType = 'string';
     protected $fillable = ['ficha','denunciante_dni','fecha_caso','tipo','lugar','medida','estado','observacion_abogado'];
 
-    public function denuncuante()
+    public function denunciante()
     {
         return $this->belongsTo('App\Persona','denunciante_dni','dni');
     }
@@ -19,6 +19,4 @@ class Caso extends Model
     {
         return $this->hasMany('App\DetalleCaso','caso_ficha','ficha');
     }
-    
-    //agresor
 }

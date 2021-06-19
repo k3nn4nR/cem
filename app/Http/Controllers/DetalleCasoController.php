@@ -14,7 +14,7 @@ class DetalleCasoController extends Controller
      */
     public function index()
     {
-        //
+        return DetalleCaso::with('caso')->get();
     }
 
     /**

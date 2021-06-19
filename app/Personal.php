@@ -17,4 +17,9 @@ class Personal extends Model
     {
         return $this->hasOne('App\Persona','dni','persona_dni');
     }
+
+    public function seguimientos()
+    {
+        return $this->belongsToMany('App\Seguimiento')->withPivot('comentario');
+    }
 }

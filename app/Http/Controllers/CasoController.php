@@ -17,7 +17,7 @@ class CasoController extends Controller
      */
     public function all()
     {
-        return Caso::with('denuncuante')->get();
+        return Caso::with('denunciante','detalles.agresor')->get();
     }
 
     /**
