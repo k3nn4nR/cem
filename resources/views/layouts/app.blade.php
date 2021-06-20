@@ -33,6 +33,8 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!- Left Side Of Navbar ->
+                        @guest
+                        @else
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('personas') }}">Personas</a>
@@ -47,7 +49,7 @@
                                 <a class="nav-link" href="{{ url('seguimientos') }}">Seguimientos</a>
                             </li>
                         </ul>
-
+                        @endguest
                         <!- Right Side Of Navbar ->
                         <ul class="navbar-nav ml-auto">
                             <!- Authentication Links ->

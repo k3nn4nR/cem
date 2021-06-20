@@ -28,7 +28,7 @@ class StorePersona extends FormRequest
             'persona.ape_materno'   => 'required',
             'persona.nombres'       => 'required',
             'persona.dni'           => 'required|string|unique:personas,dni|regex:/^([0-9]{8})$/',
-            'persona.celular'       => 'required|string|unique:personas,celular|regex:/^([0-9]{9})$/',
+            'persona.celular'       => 'nullable|string|unique:personas,celular|regex:/^([0-9]{9})$/',
             'persona.edad'          => 'required|numeric',
         ];
     }
