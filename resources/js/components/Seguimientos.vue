@@ -22,6 +22,31 @@
                                 {{ $refs.calendar.title }}
                             </v-toolbar-title>
                             <v-spacer></v-spacer>
+                            <v-menu bottom right >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on" >
+                                        <span>{{ typeToLabel[type] }}</span>
+                                        <v-icon right>
+                                            mdi-menu-down
+                                        </v-icon>
+                                    </v-btn>
+                                </template>
+                                <v-list>
+                                    <v-list-item @click="type = 'day'">
+                                        <v-list-item-title>Day</v-list-item-title>
+                                    </v-list-item>
+                                    <v-list-item @click="type = 'week'">
+                                        <v-list-item-title>Week</v-list-item-title>
+                                    </v-list-item>
+                                    <v-list-item @click="type = 'month'">
+                                        <v-list-item-title>Month</v-list-item-title>
+                                    </v-list-item>
+                                    <v-list-item @click="type = '4day'">
+                                        <v-list-item-title>4 days</v-list-item-title>
+                                    </v-list-item>
+                                </v-list>
+                            </v-menu>
+                            <v-spacer></v-spacer>
                             <v-dialog v-model="dialog" max-width="700px" persistent>
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-btn color="success" dark class="mb-2" v-bind="attrs" v-on="on" >
@@ -52,6 +77,21 @@
                                             </v-col>
                                             <v-col v-if="casoSelected">
                                                 <v-text-field dense v-model="casoSelected.estado" label="Estado" />
+                                            </v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-col>
+                                                <v-select multiple dense :items="personales" label="Personal" item-value="id" v-model="personalesSelected">
+                                                    <template slot="selection" slot-scope="data">
+                                                        {{ data.item.id }}
+                                                    </template>
+                                                    <template slot="item" slot-scope="data">
+                                                        {{ data.item.id }}
+                                                    </template>
+                                                </v-select>
+                                            </v-col>
+                                            <v-col>
+                                                <v-text-field label="Comentario" v-model="comentario" dense/>
                                             </v-col>
                                         </v-row>
                                         <v-row v-if="casoSelected">
@@ -131,8 +171,15 @@
                                     <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                                     <v-spacer></v-spacer>
                                 </v-toolbar>
-                                <v-card-text>
-                                    <span v-html="selectedEvent.details"></span>
+                                <v-card-text v-if="selectedEvent.personal">
+                                    <v-row v-for="(personal,p) in selectedEvent.personal" :key="p">
+                                        <v-col>
+                                            <v-text-field  v-model="personal.id" label="Personal" />
+                                        </v-col>
+                                        <v-col>
+                                            <v-text-field  v-model="personal.pivot.comentario" label="Comentario" />
+                                        </v-col>
+                                    </v-row>
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-btn class="error" @click="selectedOpen = false" >
@@ -153,9 +200,12 @@
             menu: false,
             dialog:false,
             seguimientos:[],
+            comentario:'',
             fecha:'',
             casos:[],
             casoSelected:'',
+            personales:[],
+            personalesSelected:[],
             focus: '',
             type: 'month',
             typeToLabel: {
@@ -221,28 +271,40 @@
                     const events = []
                     response.data.forEach(seguimiento => {
                         events.push({
-                            name: ""+"Caso: "+seguimiento.id+" Agresor: "+seguimiento.detalles.agresor.dni,
+                            name: ""+"Caso: "+seguimiento.detalles.caso_ficha+" Agresor: "+seguimiento.detalles.agresor.dni,
                             start: ""+seguimiento.fecha,
                             color: 'green',
-                            details: seguimiento.detalles,
+                            details: seguimiento.detalles.agresor,
+                            personal: seguimiento.personal,
                         })
                     });
                     this.events = events
                 })
                 axios.get('caso').then(response=>{this.casos = response.data})
+                axios.get('personal').then(response=>{this.personales = response.data})
             },
             close () {
                 this.dialog = false
                 this.casoSelected = ''
                 this.fecha = ''
+                this.comentario = ''
+                this.personalesSelected = []
             },
             save(){
                 let formData = new FormData
                 let index = 0
                 formData.append('fecha',this.fecha)
+                formData.append('comentario',this.comentario)
                 if(this.casoSelected != ''){
                     this.casoSelected.detalles.forEach(detalle => {
                         formData.append('detalles['+index+']',detalle.id)
+                        index++
+                    });
+                }
+                index = 0
+                if(this.personalesSelected != ''){
+                    this.personalesSelected.forEach(personal => {
+                        formData.append('personales['+index+']',personal)
                         index++
                     });
                 }

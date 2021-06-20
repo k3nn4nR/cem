@@ -37,10 +37,11 @@ class SeguimientoController extends Controller
     public function store(StoreSeguimiento $request)
     {
         foreach($request->input('detalles') as $detalle){
-            Seguimiento::create([
+            $seguimiento = Seguimiento::create([
                 'detalle_caso_id' => $detalle,
                 'fecha' => $request->input('fecha'),
             ]);
+            $seguimiento->personal()->attach($request->input('personales'),['comentario' => strtoupper($request->input('comentario'))]);
         }
     }
 

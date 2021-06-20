@@ -16,7 +16,7 @@ class CreatePersonalSeguimientoTable extends Migration
         Schema::create('personal_seguimiento', function (Blueprint $table) {
             $table->unsignedBigInteger('seguimiento_id');
             $table->string('personal_id');
-            $table->string('comentario');
+            $table->string('comentario')->nullable();
             $table->foreign('seguimiento_id')->references('id')->on('seguimientos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('personal_id')->references('id')->on('personal')->onDelete('cascade')->onUpdate('cascade');
         });
