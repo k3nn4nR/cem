@@ -11,7 +11,7 @@
                             <v-data-table dense :items="personales" :headers="PersonalesHeaders" :search="busqueda">
                                 <template v-slot:top>
                                     <v-toolbar flat>
-                                        <v-toolbar-title>Personales</v-toolbar-title>
+                                        <v-toolbar-title>Personal</v-toolbar-title>
                                         <v-divider class="mx-4" inset vertical/>
                                         <v-spacer/>
                                         <v-text-field v-model="busqueda" label="Busqueda" />

@@ -18,7 +18,7 @@ class CreateContactosTable extends Migration
             $table->string('persona_dni',8);
             $table->string('contacto_nombre');
             $table->string('relacion');
-            $table->string('celular',9)->unique();
+            $table->string('celular',9);
             $table->timestamps();
             $table->foreign('persona_dni')->references('dni')->on('personas')->onDelete('cascade')->onUpdate('cascade');
         });

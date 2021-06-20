@@ -12,6 +12,11 @@ class PersonalController extends Controller
     {
         return Personal::with('persona')->get();
     }
+
+    public function maestro()
+    {
+        return view('personal.maestro');
+    }
     /**
      * Display a listing of the resource.
      *

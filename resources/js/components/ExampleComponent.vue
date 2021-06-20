@@ -5,26 +5,7 @@
                 <div class="card">
                     <div class="card-header">Example Component</div>
                     <div class="card-body">
-                        <v-row>
-                            <v-col>
-                                <Personas/>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col>
-                                <Personal/>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col>
-                                <Casos/>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col>
-                                <Seguimientos/>
-                            </v-col>
-                        </v-row>
+                        
                     </div>
                     <div class="card-footer">
                     </div>

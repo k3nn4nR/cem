@@ -27,7 +27,7 @@ class StoreContacto extends FormRequest
             'contacto.persona_dni'       => 'required|exists:personas,dni',
             'contacto.contacto_nombre'   => 'required',
             'contacto.relacion'          => 'required',
-            'contacto.celular'           => 'required|unique:contactos,celular|regex:/^([0-9]{9})$/',
+            'contacto.celular'           => 'required|regex:/^([0-9]{9})$/',
         ];
     }
 
@@ -38,8 +38,7 @@ class StoreContacto extends FormRequest
             'contacto.persona_dni.exists'       => 'El dni no existe.',
             'contacto.contacto_nombre.required' => 'Se requiere el nombre comppleto del contacto.',
             'contacto.relacion.required'        => 'Se requiere la relacion con el contacto.',
-            'contacto.celular.required'         => 'Se requiere el numero celular',
-            'contacto.celular.unique'           => 'El celular ya esta ingresado en la BD',
+            'contacto.celular.required'         => 'Se requiere el numero celular',            
             'contacto.celular.regex'            => 'El numero celular tiene que tener 9 digitos.',
         ];
     }

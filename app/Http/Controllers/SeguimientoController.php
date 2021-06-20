@@ -8,6 +8,15 @@ use App\Http\Requests\StoreSeguimiento;
 
 class SeguimientoController extends Controller
 {
+    public function all()
+    {
+        return Seguimiento::with('detalles.agresor','personal')->get();
+    }
+
+    public function maestro()
+    {
+        return view('seguimiento.maestro');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,7 @@ class SeguimientoController extends Controller
      */
     public function index()
     {
-        return Seguimiento::with('detalles.agresor','personal')->get();
+        //
     }
 
     /**

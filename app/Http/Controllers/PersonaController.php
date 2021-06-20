@@ -18,6 +18,11 @@ class PersonaController extends Controller
     {
         return Persona::all();
     }
+
+    public function maestro()
+    {
+        return view('persona.maestro');
+    }
     
     /**
      * Display a listing of the resource.

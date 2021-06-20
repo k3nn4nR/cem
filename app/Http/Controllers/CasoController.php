@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class CasoController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +17,11 @@ class CasoController extends Controller
     public function all()
     {
         return Caso::with('denunciante','detalles.agresor')->get();
+    }
+
+    public function maestro()
+    {
+        return view('caso.maestro');
     }
 
     /**

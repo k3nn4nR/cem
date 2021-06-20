@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class DetalleCasoController extends Controller
 {
+    public function all()
+    {
+        return DetalleCaso::with('caso')->get();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,7 @@ class DetalleCasoController extends Controller
      */
     public function index()
     {
-        return DetalleCaso::with('caso')->get();
+        //
     }
 
     /**

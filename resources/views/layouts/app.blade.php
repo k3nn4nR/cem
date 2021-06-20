@@ -34,7 +34,18 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!- Left Side Of Navbar ->
                         <ul class="navbar-nav mr-auto">
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('personas') }}">Personas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('el_personal') }}">Personal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('casos') }}">Casos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('seguimientos') }}">Seguimientos</a>
+                            </li>
                         </ul>
 
                         <!- Right Side Of Navbar ->
