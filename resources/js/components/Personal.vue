@@ -121,10 +121,11 @@
                     this.editPersonal = Object.assign({}, this.defaultPersonal)
                     this.editedIndex = -1
                 })
+                this.id = ''
             },
             save(){
                 if (this.editedIndex > -1) {
-                    axios.put('personal',{personal:this.editPersonal}).then(response=>{
+                    axios.put('personal',{id_original:this.id,personal:this.editPersonal}).then(response=>{
                         this.close()
                         this.getData()
                         Swal.fire({
@@ -149,9 +150,10 @@
                 }
             },
             editItem (item) {
-                this.editedIndex = this.personas.indexOf(item)
+                this.editedIndex = this.personales.indexOf(item)
                 this.editPersonal = Object.assign({}, item)
                 this.dialog = true
+                this.id = this.editPersonal.id
             },
             showError(errores){
                 var texto="";

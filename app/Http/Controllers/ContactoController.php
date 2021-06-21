@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contacto;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreContacto;
+use App\Http\Requests\UpdateContacto;
 
 class ContactoController extends Controller
 {
@@ -73,13 +74,13 @@ class ContactoController extends Controller
      * @param  \App\Contacto  $contacto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateContacto $request)
     {
-        Contacto::where('id', $request->input('persona')['id'])
+        Contacto::where('id', $request->input('contacto')['id'])
             ->update([
-                'contacto_nombre' => strtoupper($request->input('persona')['contacto_nombre']),
-                'relacion' => strtoupper($request->input('persona')['relacion']),
-                'celular' => strtoupper($request->input('persona')['celular']),
+                'contacto_nombre' => strtoupper($request->input('contacto')['contacto_nombre']),
+                'relacion' => strtoupper($request->input('contacto')['relacion']),
+                'celular' => strtoupper($request->input('contacto')['celular']),
             ]);
     }
 

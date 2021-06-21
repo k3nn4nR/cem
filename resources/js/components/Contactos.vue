@@ -122,17 +122,32 @@ export default {
         },
         save () {
             if (this.editedIndex > -1) {
-                axios.put('contacto',{contacto:this.editedContacto}).then(response=>{this.getData()}).catch(error =>{
+                axios.put('contacto',{contacto:this.editedContacto}).then(response=>{
+                    this.getData()
+                    this.closeDialog()
+                    Swal.fire({
+                        icon:'success',
+                        text:'Actualizacion Satisfactoria!',
+                    })
+                
+                }).catch(error =>{
                     this.showError(error.response.data.errors)
                 })
             } 
             if(this.editedIndex == -1) {
                 this.editedContacto.persona_dni = this.persona
-                axios.post('contacto',{contacto:this.editedContacto}).then(response=>{this.getData()}).catch(error =>{
+                axios.post('contacto',{contacto:this.editedContacto}).then(response=>{
+                    this.getData()
+                    this.closeDialog()
+                    Swal.fire({
+                        icon:'success',
+                        text:'Registro Satisfactorio!',
+                    })
+                
+                }).catch(error =>{
                     this.showError(error.response.data.errors)
                 })
             }
-            this.closeDialog()
         },
         showError(errores){
             var texto="";
@@ -145,7 +160,7 @@ export default {
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,
-                onOpen: (toast) => {
+                didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }

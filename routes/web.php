@@ -53,4 +53,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/personal','PersonalController@store');
     Route::put('/personal','PersonalController@update');
     Route::delete('/personal','PersonalController@destroy');
+
+    Route::get('/departamento','DepartamentoController@all');
+    Route::get('/departamento/{id_departamento}','DepartamentoController@getprovincias');
+    Route::get('/provincia','ProvinciaController@all');
+    Route::get('/provincia/{id_provincia}','ProvinciaController@getDistritos');
+    Route::get('/distrito','DistritoController@all');
 });

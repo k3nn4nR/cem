@@ -81,9 +81,15 @@ class PersonalController extends Controller
      * @param  \App\Personal  $personal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Personal $personal)
+    public function update(Request $request)
     {
-        //
+        $personal = Personal::find($request->input('id_original'));
+        if($request->input('id_original') !=  $request->input('personal')['id']){
+            $personal->id = strtoupper($request->input('personal')['id']);
+        }
+        $personal->persona_dni = strtoupper($request->input('personal')['persona_dni']);
+        $personal->cargo = strtoupper($request->input('personal')['cargo']);
+        $personal->save();
     }
 
     /**

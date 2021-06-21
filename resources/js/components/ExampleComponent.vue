@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header">Example Component</div>
                     <div class="card-body">
-                        
+                        <Ubigeos/>
                     </div>
                     <div class="card-footer">
                     </div>
@@ -16,16 +16,10 @@
 </template>
 
 <script>
-    import Seguimientos from './Seguimientos.vue';
-    import Casos from './Casos.vue';
-    import Personas from './Personas.vue';
-    import Personal from './Personal.vue';
+    import Ubigeos from './Ubigeos.vue';
     export default {
         components:{
-            Seguimientos,
-            Casos,
-            Personas,
-            Personal,
+            Ubigeos,
         },
         mounted() {
 

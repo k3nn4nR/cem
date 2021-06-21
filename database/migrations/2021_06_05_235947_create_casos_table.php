@@ -18,6 +18,8 @@ class CreateCasosTable extends Migration
             $table->string('denunciante_dni',8);
             $table->date('fecha_caso');
             $table->string('tipo');
+            $table->string('turno');
+            $table->string('distrito')->nullable();
             $table->string('lugar');
             $table->string('medida')->nullable();
             $table->string('observacion_abogado')->nullable();
@@ -25,6 +27,7 @@ class CreateCasosTable extends Migration
             $table->timestamps();
             $table->primary('ficha');
             $table->foreign('denunciante_dni')->references('dni')->on('personas')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('distrito')->references('id')->on('distritos')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

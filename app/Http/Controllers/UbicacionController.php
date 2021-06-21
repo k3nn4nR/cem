@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Ubicacion;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUbicacion;
+use App\Http\Requests\UpdateUbicacion;
 
 class UbicacionController extends Controller
 {
@@ -73,7 +74,7 @@ class UbicacionController extends Controller
      * @param  \App\Ubicacion  $ubicacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateUbicacion $request)
     {
         Ubicacion::where('id', $request->input('ubicacion')['id'])
             ->update([

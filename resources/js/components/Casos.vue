@@ -108,35 +108,35 @@
                                     <v-dialog v-model="dialogShow" max-width="700px" persistent>
                                         <v-card>
                                             <v-card-title>Caso {{ editedCaso.ficha }} </v-card-title>
-                                            <v-card-text v-if="editedCaso.denuncuante">
+                                            <v-card-text v-if="editedCaso.denunciante">
                                                 <v-row>
                                                     <v-col>
-                                                        <v-text-field v-model="editedCaso.denuncuante.ape_paterno" label="Apellido Paterno" />
+                                                        <v-text-field v-model="editedCaso.denunciante.ape_paterno" label="Apellido Paterno" />
                                                     </v-col>
                                                     <v-col>
-                                                        <v-text-field v-model="editedCaso.denuncuante.ape_materno" label="Apellido Materno" />
+                                                        <v-text-field v-model="editedCaso.denunciante.ape_materno" label="Apellido Materno" />
                                                     </v-col>
                                                     <v-col>
-                                                        <v-text-field v-model="editedCaso.denuncuante.nombres" label="Nombre" />
+                                                        <v-text-field v-model="editedCaso.denunciante.nombres" label="Nombre" />
                                                     </v-col>
                                                 </v-row>
                                                 <v-row>
                                                     <v-col>
-                                                        <v-text-field v-model="editedCaso.denuncuante.celular" label="Celular" />
+                                                        <v-text-field v-model="editedCaso.denunciante.celular" label="Celular" />
                                                     </v-col>
                                                     <v-col>
-                                                        <v-text-field v-model="editedCaso.denuncuante.edad" label="Edad" />
+                                                        <v-text-field v-model="editedCaso.denunciante.edad" label="Edad" />
                                                     </v-col>
                                                     <v-col>
-                                                        <v-text-field v-model="editedCaso.denuncuante.nivel_riesgo" label="Nivel de Riesgo" />
+                                                        <v-text-field v-model="editedCaso.denunciante.nivel_riesgo" label="Nivel de Riesgo" />
                                                     </v-col>
                                                 </v-row>
                                                 <v-row>
                                                     
                                                 </v-row>
-                                                <v-card outlined v-for="(caso_detalle,cd) in caso_detalles" :key="cd">
-                                                    <v-card-title></v-card-title>
-                                                    <v-card-text>
+                                                <v-card outlined>
+                                                    <v-card-title>Agresores</v-card-title>
+                                                    <v-card-text v-for="(caso_detalle,cd) in caso_detalles" :key="cd">
                                                         <v-row>
                                                             <v-col>
                                                                 <v-text-field label="Apellido Paterno" dense v-model="caso_detalle.agresor.ape_paterno "/>
