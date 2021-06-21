@@ -26,7 +26,7 @@ class AddTurnoToCasos extends Migration
     public function down()
     {
         Schema::table('casos', function (Blueprint $table) {
-            $table->string('turno');
+            $table->dropcolumn('turno');
         });
     }
 }

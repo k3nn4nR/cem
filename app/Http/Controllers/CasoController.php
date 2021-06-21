@@ -60,6 +60,7 @@ class CasoController extends Controller
             'medida' => strtoupper($request->input('medida')),
             'observacion_abogado' => strtoupper($request->input('observacion_abogado')),
             'tipo' => strtoupper($request->input('tipo')),
+            'turno' => strtoupper($request->input('turno')),
         ]);
         foreach($request->input('detalles') as $detalle)
         {

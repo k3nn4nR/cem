@@ -34,6 +34,9 @@
                                                             <v-date-picker v-model="editedCaso.fecha_caso" @input="menu = false"/>
                                                         </v-menu>
                                                     </v-col>
+                                                    <v-col>
+                                                        <v-text-field v-model="editedCaso.turno" dense label="Turno" />
+                                                    </v-col>
                                                 </v-row>
                                                 <v-row>
                                                     <v-col>
@@ -193,6 +196,7 @@ export default {
             personas:[],
             editedIndex:-1,
             editedCaso:{
+                turno:'',
                 ficha:'',
                 denunciante_dni:'',
                 fecha_caso:'',
@@ -202,6 +206,7 @@ export default {
                 observacion_abogado:'',
             },
             defaultCaso:{
+                turno:'',
                 ficha:'',
                 denunciante_dni:'',
                 fecha_caso:'',
@@ -276,6 +281,7 @@ export default {
             formData.append('medida',this.editedCaso.medida)
             formData.append('observacion_abogado',this.editedCaso.observacion_abogado)
             formData.append('tipo',this.editedCaso.tipo)
+            formData.append('turno',this.editedCaso.turno)
             this.detalles.forEach(detalle => {
                 formData.append('detalles['+index+'][agresor_dni]',detalle.agresor_dni)
                 formData.append('detalles['+index+'][comentario]',detalle.comentario)

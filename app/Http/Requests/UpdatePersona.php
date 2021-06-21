@@ -29,7 +29,7 @@ class UpdatePersona extends FormRequest
             'persona.ape_materno'   => 'required',
             'persona.nombres'       => 'required',
             'persona.dni'           => 'required|string|regex:/^([0-9]{8})$/',Rule::unique('personas')->ignore($this->dni,'dni'),
-            'persona.celular'       => 'required|string|regex:/^([0-9]{9})$/',Rule::unique('personas')->ignore($this->celular,'celular'),
+            'persona.celular'       => 'nullable|string|regex:/^([0-9]{9})$/',Rule::unique('personas')->ignore($this->celular,'celular'),
             'persona.edad'          => 'required|numeric',
         ];
     }
@@ -44,7 +44,6 @@ class UpdatePersona extends FormRequest
             'persona.dni.string'            => 'El DNI tiene que ser un string.',
             'persona.dni.unique'            => 'El dni ya esta ingresado en la BD.',
             'persona.dni.regex'             => 'EL DNI tiene que tener 8 numeros.',
-            'persona.celular.required'      => 'Se requiere el celular.',
             'persona.celular.string'        => 'El celular tiene que ser un string.',
             'persona.celular.unique'        => 'El celular ya esta ingresado en la BD.',
             'persona.celular.regex'         => 'El celular tiene que tener 9 numeros.',
