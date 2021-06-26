@@ -70,7 +70,7 @@
                                             <v-col>
                                                 <v-menu v-model="menu" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto" >
                                                     <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field dense v-model="fecha" label="Fecha del caso" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"/>
+                                                        <v-text-field dense v-model="fecha" label="Fecha del seguimiento" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"/>
                                                     </template>
                                                     <v-date-picker v-model="fecha" @input="menu = false"/>
                                                 </v-menu>

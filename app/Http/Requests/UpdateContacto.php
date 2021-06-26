@@ -24,7 +24,7 @@ class UpdateContacto extends FormRequest
     public function rules()
     {
         return [
-            'contacto.id'               => 'required|exists:ubicaciones,id',
+            'contacto.id'               => 'required|exists:contactos,id',
             'contacto.contacto_nombre'  => 'required',
             'contacto.relacion'         => 'required',
             'contacto.celular'          => 'required|regex:/^([0-9]{9})$/',
