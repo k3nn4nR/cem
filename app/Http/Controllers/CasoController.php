@@ -81,7 +81,7 @@ class CasoController extends Controller
      */
     public function show($caso)
     {
-        return DetalleCaso::where('caso_ficha',$caso)->with('agresor')->get();
+        return DetalleCaso::where('caso_ficha',$caso)->with('agresor','seguimiento.personal')->get();
     }
 
     /**

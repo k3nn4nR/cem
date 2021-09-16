@@ -17,4 +17,9 @@ class DetalleCaso extends Model
     {
         return $this->belongsTo('App\Persona','agresor_dni','dni');
     }
+
+    public function seguimiento()
+    {
+        return $this->hasMany('App\Seguimiento');
+    }
 }

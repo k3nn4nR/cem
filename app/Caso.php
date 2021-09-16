@@ -19,4 +19,9 @@ class Caso extends Model
     {
         return $this->hasMany('App\DetalleCaso','caso_ficha','ficha');
     }
+
+    // public function seguimientos()
+    // {
+    //     return $this->hasManyThrough('App\Seguimiento', 'App\DetalleCaso');
+    // }
 }

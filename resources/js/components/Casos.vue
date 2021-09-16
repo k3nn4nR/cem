@@ -13,7 +13,7 @@
                                     <v-text-field v-model="busqueda" label="Busqueda" />
                                     <v-divider class="mx-4" inset vertical/>
                                     <v-spacer/>
-                                    <v-dialog v-model="dialog" max-width="700px" persistent>
+                                    <v-dialog v-model="dialog" max-width="800px" persistent>
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-btn color="success" dark class="mb-2" v-bind="attrs" v-on="on" >
                                                 +
@@ -35,7 +35,7 @@
                                                         </v-menu>
                                                     </v-col>
                                                     <v-col>
-                                                        <v-text-field v-model="editedCaso.turno" dense label="Turno" />
+                                                        <v-select :items="turnos" v-model="editedCaso.turno" dense label="Turno" />
                                                     </v-col>
                                                 </v-row>
                                                 <v-row>
@@ -43,12 +43,12 @@
                                                         <v-text-field dense label="Lugar" v-model="editedCaso.lugar" />
                                                     </v-col>
                                                     <v-col>
-                                                        <v-text-field dense label="Tipo" v-model="editedCaso.tipo" />
+                                                        <v-select :items="tipos" v-model="editedCaso.tipo" dense label="Tipo" />
                                                     </v-col>
                                                 </v-row>
                                                 <v-row>
                                                     <v-col>
-                                                        <v-text-field dense label="Medida" v-model="editedCaso.medida" />
+                                                        <v-select :items="medidas" v-model="editedCaso.medida" dense label="Medida" />
                                                     </v-col>
                                                     <v-col>
                                                         <v-text-field dense label="Observacion Abogado" v-model="editedCaso.observacion_abogado" />
@@ -105,64 +105,85 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
-                                    <v-dialog v-model="dialogShow" max-width="700px" persistent>
+                                    <v-dialog v-model="dialogShow" max-width="800px" persistent>
                                         <v-card>
                                             <v-card-title>Caso {{ editedCaso.ficha }} </v-card-title>
                                             <v-card-text v-if="editedCaso.denunciante">
-                                                <v-row>
-                                                    <v-col>
-                                                        <v-text-field v-model="editedCaso.denunciante.ape_paterno" label="Apellido Paterno" />
-                                                    </v-col>
-                                                    <v-col>
-                                                        <v-text-field v-model="editedCaso.denunciante.ape_materno" label="Apellido Materno" />
-                                                    </v-col>
-                                                    <v-col>
-                                                        <v-text-field v-model="editedCaso.denunciante.nombres" label="Nombre" />
-                                                    </v-col>
-                                                </v-row>
-                                                <v-row>
-                                                    <v-col>
-                                                        <v-text-field v-model="editedCaso.denunciante.celular" label="Celular" />
-                                                    </v-col>
-                                                    <v-col>
-                                                        <v-text-field v-model="editedCaso.denunciante.edad" label="Edad" />
-                                                    </v-col>
-                                                    <v-col>
-                                                        <v-text-field v-model="editedCaso.denunciante.nivel_riesgo" label="Nivel de Riesgo" />
-                                                    </v-col>
-                                                </v-row>
-                                                <v-row>
-                                                    
-                                                </v-row>
-                                                <v-card outlined>
-                                                    <v-card-title>Agresores</v-card-title>
-                                                    <v-card-text v-for="(caso_detalle,cd) in caso_detalles" :key="cd">
-                                                        <v-row>
-                                                            <v-col>
-                                                                <v-text-field label="Apellido Paterno" dense v-model="caso_detalle.agresor.ape_paterno "/>
-                                                            </v-col>
-                                                            <v-col>
-                                                                <v-text-field label="Apellido Materno" dense v-model="caso_detalle.agresor.ape_materno "/>
-                                                            </v-col>
-                                                            <v-col>
-                                                                <v-text-field label="Nombre" dense v-model="caso_detalle.agresor.nombres "/>
-                                                            </v-col>
-                                                        </v-row>
-                                                        <v-row>
-                                                            <v-col>
-                                                                <v-text-field label="DNI" dense v-model="caso_detalle.agresor_dni "/>
-                                                            </v-col>
-                                                            <v-col>
-                                                                <v-text-field label="Vinculo" dense v-model="caso_detalle.vinculo "/>
-                                                            </v-col>
-                                                        </v-row>
-                                                        <v-row>
-                                                            <v-col>
-                                                                <v-text-field label="Comentario" dense v-model="caso_detalle.comentario "/>
-                                                            </v-col>
-                                                        </v-row>
-                                                    </v-card-text>
-                                                </v-card>
+                                                <v-tabs v-model="tab" background-color="deep-purple accent-4" centered dark>
+                                                    <v-tabs-slider></v-tabs-slider>
+                                                    <v-tab>
+                                                        Detalle
+                                                    </v-tab>
+                                                    <v-tab>
+                                                        Seguimiento
+                                                    </v-tab>
+                                                </v-tabs>
+                                                <v-tabs-items v-model="tab">
+                                                    <v-tab-item>
+                                                        <v-card>
+                                                            <v-card-text>
+                                                                <v-row>
+                                                                    <v-col>
+                                                                        <v-text-field v-model="editedCaso.denunciante.ape_paterno" label="Apellido Paterno" />
+                                                                    </v-col>
+                                                                    <v-col>
+                                                                        <v-text-field v-model="editedCaso.denunciante.ape_materno" label="Apellido Materno" />
+                                                                    </v-col>
+                                                                    <v-col>
+                                                                        <v-text-field v-model="editedCaso.denunciante.nombres" label="Nombre" />
+                                                                    </v-col>
+                                                                </v-row>
+                                                                <v-row>
+                                                                    <v-col>
+                                                                        <v-text-field v-model="editedCaso.denunciante.celular" label="Celular" />
+                                                                    </v-col>
+                                                                    <v-col>
+                                                                        <v-text-field v-model="editedCaso.denunciante.edad" label="Edad" />
+                                                                    </v-col>
+                                                                    <v-col>
+                                                                        <v-text-field v-model="editedCaso.denunciante.nivel_riesgo" label="Nivel de Riesgo" />
+                                                                    </v-col>
+                                                                </v-row>
+                                                                <v-card outlined>
+                                                                    <v-card-title>Agresores</v-card-title>
+                                                                    <v-card-text v-for="(caso_detalle,cd) in caso_detalles" :key="cd">
+                                                                        <v-row>
+                                                                            <v-col>
+                                                                                <v-text-field label="Apellido Paterno" dense v-model="caso_detalle.agresor.ape_paterno "/>
+                                                                            </v-col>
+                                                                            <v-col>
+                                                                                <v-text-field label="Apellido Materno" dense v-model="caso_detalle.agresor.ape_materno "/>
+                                                                            </v-col>
+                                                                            <v-col>
+                                                                                <v-text-field label="Nombre" dense v-model="caso_detalle.agresor.nombres "/>
+                                                                            </v-col>
+                                                                        </v-row>
+                                                                        <v-row>
+                                                                            <v-col>
+                                                                                <v-text-field label="DNI" dense v-model="caso_detalle.agresor_dni "/>
+                                                                            </v-col>
+                                                                            <v-col>
+                                                                                <v-text-field label="Vinculo" dense v-model="caso_detalle.vinculo "/>
+                                                                            </v-col>
+                                                                        </v-row>
+                                                                        <v-row>
+                                                                            <v-col>
+                                                                                <v-text-field label="Comentario" dense v-model="caso_detalle.comentario "/>
+                                                                            </v-col>
+                                                                        </v-row>
+                                                                    </v-card-text>
+                                                                </v-card>
+                                                            </v-card-text>
+                                                        </v-card>
+                                                    </v-tab-item>
+                                                    <v-tab-item>
+                                                        <v-card>
+                                                            <v-card-text >
+                                                                <v-data-table dense :items="seguimientos" :headers="seguimientoHeaders" />
+                                                            </v-card-text>
+                                                        </v-card>
+                                                    </v-tab-item>
+                                                </v-tabs-items>
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-btn @click="closeShow" class="error">Cerrar</v-btn>
@@ -187,6 +208,7 @@
 export default {
     data(){
         return {
+            tab:null,
             date: new Date().toISOString().substr(0, 10),
             menu: false,
             dialog:false,
@@ -221,6 +243,7 @@ export default {
                 comentario:'',
             }],
             caso_detalles:'',
+            seguimientos:[],
         };
     },
     computed:{
@@ -250,6 +273,37 @@ export default {
             });
             return agresores_array
         },
+        turnos(){
+            return [
+                {value:'L-V-M',text:'LUNES A VIERNES MAÑANA'},
+                {value:'L-V-T',text:'LUNES A VIERNES TARDE'},
+                {value:'L-V-N',text:'LUNES A VIERNES NOCHE'},
+                {value:'FDSM-D',text:'FIN DE SEMANA DIA'},
+                {value:'FDSM-N',text:'FIN DE SEMANA NOCHE'},
+            ];
+        },
+        tipos(){
+            return [
+                {value:'V-FISICA',text:'VIOLENCIA FISICA'},
+                {value:'V-PSICO',text:'VIOLENCIA PSICOLOGICA'},
+                {value:'V-PATRI',text:'VIOLENCIA PATRIMONIAL'},
+                {value:'V-SEX',text:'VIOLENCIA SEXUAL'},
+            ];
+        },
+        medidas(){
+            return [
+                {value:'CON',text:'CONCEDIDAS'},
+                {value:'NO-CON',text:'NO CONCEDIDAS'},
+                {value:'EN-PROCE',text:'EN PROCESO'},
+            ];
+        },
+        seguimientoHeaders(){
+            return [
+                {value:'fecha',text:'Fecha'},
+                {value:'personal',text:'Personal'},
+                {value:'comentario',text:'Comentario'},
+            ];
+        }
     },
     mounted(){
         this.getData()
@@ -335,13 +389,24 @@ export default {
             this.editedCaso = Object.assign({}, item)
             axios.get('caso/'+item.ficha).then(response=>{
                 this.caso_detalles = response.data
-                this.dialogShow = true                
+                this.dialogShow = true
+                if(response.data[0])
+                {
+                    response.data[0].seguimiento.forEach(item => {
+                        this.seguimientos.push({
+                            fecha:item.fecha,
+                            personal:item.personal[0].id,
+                            comentario:item.personal[0].pivot.comentario,
+                        })
+                    });
+                }
             })
         },
         closeShow(){
             this.dialogShow = false
             this.caso_detalles = ''
             this.editedCaso = this.defaultCaso
+            this.seguimientos = []
         },
     }
 }
