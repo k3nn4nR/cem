@@ -42,9 +42,7 @@
                                                     <v-col>
                                                         <v-text-field dense label="Lugar" v-model="editedCaso.lugar" />
                                                     </v-col>
-                                                    <v-col>
-                                                        <v-select :items="tipos" v-model="editedCaso.tipo" dense label="Tipo" />
-                                                    </v-col>
+                                                    
                                                 </v-row>
                                                 <v-row>
                                                     <v-col>
@@ -95,6 +93,9 @@
                                                             <v-col>
                                                                 <v-text-field dense v-model="detalle.comentario" label="Comentario" />
                                                             </v-col>
+                                                            <v-col>
+                                                                <v-select :items="tipos" v-model="detalle.tipos" multiple dense label="Tipo" />
+                                                            </v-col>
                                                         </v-row>
                                                     </v-card-text>
                                                 </v-card>
@@ -124,24 +125,24 @@
                                                             <v-card-text>
                                                                 <v-row>
                                                                     <v-col>
-                                                                        <v-text-field v-model="editedCaso.denunciante.ape_paterno" label="Apellido Paterno" />
+                                                                        <v-text-field :disabled="caso_detalles!=''" v-model="editedCaso.denunciante.ape_paterno" label="Apellido Paterno" />
                                                                     </v-col>
                                                                     <v-col>
-                                                                        <v-text-field v-model="editedCaso.denunciante.ape_materno" label="Apellido Materno" />
+                                                                        <v-text-field :disabled="caso_detalles!=''" v-model="editedCaso.denunciante.ape_materno" label="Apellido Materno" />
                                                                     </v-col>
                                                                     <v-col>
-                                                                        <v-text-field v-model="editedCaso.denunciante.nombres" label="Nombre" />
+                                                                        <v-text-field :disabled="caso_detalles!=''" v-model="editedCaso.denunciante.nombres" label="Nombre" />
                                                                     </v-col>
                                                                 </v-row>
                                                                 <v-row>
                                                                     <v-col>
-                                                                        <v-text-field v-model="editedCaso.denunciante.celular" label="Celular" />
+                                                                        <v-text-field :disabled="caso_detalles!=''" v-model="editedCaso.denunciante.celular" label="Celular" />
                                                                     </v-col>
                                                                     <v-col>
-                                                                        <v-text-field v-model="editedCaso.denunciante.edad" label="Edad" />
+                                                                        <v-text-field :disabled="caso_detalles!=''" v-model="editedCaso.denunciante.edad" label="Edad" />
                                                                     </v-col>
                                                                     <v-col>
-                                                                        <v-text-field v-model="editedCaso.denunciante.nivel_riesgo" label="Nivel de Riesgo" />
+                                                                        <v-text-field :disabled="caso_detalles!=''" v-model="editedCaso.denunciante.nivel_riesgo" label="Nivel de Riesgo" />
                                                                     </v-col>
                                                                 </v-row>
                                                                 <v-card outlined>
@@ -149,26 +150,34 @@
                                                                     <v-card-text v-for="(caso_detalle,cd) in caso_detalles" :key="cd">
                                                                         <v-row>
                                                                             <v-col>
-                                                                                <v-text-field label="Apellido Paterno" dense v-model="caso_detalle.agresor.ape_paterno "/>
-                                                                            </v-col>
-                                                                            <v-col>
-                                                                                <v-text-field label="Apellido Materno" dense v-model="caso_detalle.agresor.ape_materno "/>
-                                                                            </v-col>
-                                                                            <v-col>
-                                                                                <v-text-field label="Nombre" dense v-model="caso_detalle.agresor.nombres "/>
+                                                                                {{ caso_detalle.letra_asignada }}
                                                                             </v-col>
                                                                         </v-row>
                                                                         <v-row>
                                                                             <v-col>
-                                                                                <v-text-field label="DNI" dense v-model="caso_detalle.agresor_dni "/>
+                                                                                <v-text-field :disabled="caso_detalles!=''" label="Apellido Paterno" dense v-model="caso_detalle.agresor.ape_paterno "/>
                                                                             </v-col>
                                                                             <v-col>
-                                                                                <v-text-field label="Vinculo" dense v-model="caso_detalle.vinculo "/>
+                                                                                <v-text-field :disabled="caso_detalles!=''" label="Apellido Materno" dense v-model="caso_detalle.agresor.ape_materno "/>
+                                                                            </v-col>
+                                                                            <v-col>
+                                                                                <v-text-field :disabled="caso_detalles!=''" label="Nombre" dense v-model="caso_detalle.agresor.nombres "/>
                                                                             </v-col>
                                                                         </v-row>
                                                                         <v-row>
                                                                             <v-col>
-                                                                                <v-text-field label="Comentario" dense v-model="caso_detalle.comentario "/>
+                                                                                <v-text-field :disabled="caso_detalles!=''" label="DNI" dense v-model="caso_detalle.agresor_dni "/>
+                                                                            </v-col>
+                                                                            <v-col>
+                                                                                <v-text-field :disabled="caso_detalles!=''" label="Vinculo" dense v-model="caso_detalle.vinculo "/>
+                                                                            </v-col>
+                                                                        </v-row>
+                                                                        <v-row>
+                                                                            <v-col>
+                                                                                <v-text-field :disabled="caso_detalles!=''" label="Comentario" dense v-model="caso_detalle.comentario "/>
+                                                                            </v-col>
+                                                                            <v-col>
+                                                                                <v-select :disabled="caso_detalles!=''" :items="tipos" v-model="caso_detalle.tipos_violacion" multiple dense label="Tipo" />
                                                                             </v-col>
                                                                         </v-row>
                                                                     </v-card-text>
@@ -222,7 +231,6 @@ export default {
                 ficha:'',
                 denunciante_dni:'',
                 fecha_caso:'',
-                tipo:'',
                 lugar:'',
                 medida:'',
                 observacion_abogado:'',
@@ -232,7 +240,6 @@ export default {
                 ficha:'',
                 denunciante_dni:'',
                 fecha_caso:'',
-                tipo:'',
                 lugar:'',
                 medida:'',
                 observacion_abogado:'',
@@ -241,6 +248,7 @@ export default {
                 agresor_dni:'',
                 vinculo:'',
                 comentario:'',
+                tipos:[],
             }],
             caso_detalles:'',
             seguimientos:[],
@@ -284,10 +292,10 @@ export default {
         },
         tipos(){
             return [
-                {value:'V-FISICA',text:'VIOLENCIA FISICA'},
-                {value:'V-PSICO',text:'VIOLENCIA PSICOLOGICA'},
-                {value:'V-PATRI',text:'VIOLENCIA PATRIMONIAL'},
-                {value:'V-SEX',text:'VIOLENCIA SEXUAL'},
+                {value:'VIOLENCIA FISICA',text:'VIOLENCIA FISICA'},
+                {value:'VIOLENCIA PSICOLOGICA',text:'VIOLENCIA PSICOLOGICA'},
+                {value:'VIOLENCIA PATRIMONIAL',text:'VIOLENCIA PATRIMONIAL'},
+                {value:'VIOLENCIA SEXUAL',text:'VIOLENCIA SEXUAL'},
             ];
         },
         medidas(){
@@ -340,6 +348,11 @@ export default {
                 formData.append('detalles['+index+'][agresor_dni]',detalle.agresor_dni)
                 formData.append('detalles['+index+'][comentario]',detalle.comentario)
                 formData.append('detalles['+index+'][vinculo]',detalle.vinculo)
+                let index_tipos = 0
+                detalle.tipos.forEach(tipo => {
+                    formData.append('detalles['+index+'][tipos]['+index_tipos+']',tipo)
+                    index_tipos++
+                });
                 index++
             });
             axios.post('caso',formData).then(response=>{

@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetalleCaso extends Model
 {
-    protected $fillable = ['caso_ficha','agresor_dni','vinculo','comentario'];
+    protected $fillable = ['caso_ficha','agresor_dni','vinculo','comentario','letra_asignada','tipos_violacion'];
+
+    protected $casts = [
+        'tipos_violacion' => 'array',
+    ];
 
     public function caso()
     {

@@ -59,17 +59,24 @@ class CasoController extends Controller
             'lugar' => strtoupper($request->input('lugar')),
             'medida' => strtoupper($request->input('medida')),
             'observacion_abogado' => strtoupper($request->input('observacion_abogado')),
-            'tipo' => strtoupper($request->input('tipo')),
             'turno' => strtoupper($request->input('turno')),
         ]);
+        $letra = 65;
         foreach($request->input('detalles') as $detalle)
         {
+            $tipos = array_flip($detalle['tipos']);
+            $tipos = array_change_key_case($tipos, CASE_UPPER);
+            $tipos = array_flip($tipos);
+
             $detalle = DetalleCaso::create([
                 'caso_ficha' => strtoupper($request->input('ficha')),
                 'agresor_dni' => strtoupper($detalle["agresor_dni"]),
                 'vinculo' => strtoupper($detalle["vinculo"]),
                 'comentario' => strtoupper($detalle["comentario"]),
+                'letra_asignada' => chr($letra),
+                'tipos_violacion' => $tipos,
             ]);
+            $letra ++;
         }
     }
 

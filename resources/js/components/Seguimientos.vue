@@ -98,13 +98,10 @@
                                             <v-col>
                                                 <v-text-field dense v-model="casoSelected.lugar" label="Lugar" />
                                             </v-col>
-                                            <v-col>
-                                                <v-text-field dense v-model="casoSelected.tipo" label="Tipo" />
-                                            </v-col>
                                         </v-row>
                                         <v-row v-if="casoSelected">
                                             <v-col>
-                                                <v-text-field dense v-model="casoSelected.medida" label="Medida" />
+                                                <v-select :items="medidas" v-model="casoSelected.medida" dense label="Medida" />
                                             </v-col>
                                             <v-col>
                                                 <v-text-field dense v-model="casoSelected.observacion_abogado" label="Obsevacion Abogado" />
@@ -134,6 +131,11 @@
                                                 <v-card-text v-for="(detalle,d) in casoSelected.detalles" :key="d">
                                                     <v-row>
                                                         <v-col>
+                                                            {{ detalle.letra_asignada }}
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row>
+                                                        <v-col>
                                                             <v-text-field dense v-model="detalle.agresor.ape_paterno" label="Apellido Paterno" />
                                                         </v-col>
                                                         <v-col>
@@ -149,6 +151,9 @@
                                                         </v-col>
                                                         <v-col> 
                                                             <v-text-field dense v-model="detalle.comentario" label="Comentario" />
+                                                        </v-col>
+                                                        <v-col>
+                                                            <v-select :items="tipos" v-model="detalle.tipos_violacion" multiple dense label="Tipo" />
                                                         </v-col>
                                                     </v-row>
                                                 </v-card-text>
@@ -225,12 +230,29 @@
             this.$refs.calendar.checkChange()
             this.getData()
         },
+        computed:{
+            tipos(){
+                return [
+                    {value:'VIOLENCIA FISICA',text:'VIOLENCIA FISICA'},
+                    {value:'VIOLENCIA PSICOLOGICA',text:'VIOLENCIA PSICOLOGICA'},
+                    {value:'VIOLENCIA PATRIMONIAL',text:'VIOLENCIA PATRIMONIAL'},
+                    {value:'VIOLENCIA SEXUAL',text:'VIOLENCIA SEXUAL'},
+                ];
+            },
+            medidas(){
+                return [
+                    {value:'CON',text:'CONCEDIDAS'},
+                    {value:'NO-CON',text:'NO CONCEDIDAS'},
+                    {value:'EN-PROCE',text:'EN PROCESO'},
+                ];
+            },
+        },
         watch:{
             seguimientos( val ){
                 if(val > 0){
                     this.updateRange()
                 }
-            }
+            },            
         },
         methods: {
             viewDay ({ date }) {
